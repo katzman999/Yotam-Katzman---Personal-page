@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yotam Katzman - Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'navy': '#020617',
+                        'slate-dark': '#0f172a',
+                        'accent': '#60a5fa',
+                        'accent-soft': '#93c5fd',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            min-height: 100vh;
+            background: radial-gradient(circle at top, rgba(96, 165, 250, 0.08), transparent 22%), #020617;
+        }
+        .hover-lift {
+            transition: transform 0.28s ease, box-shadow 0.28s ease, background-color 0.28s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 38px rgba(8, 15, 36, 0.35);
+        }
+        .fade-in {
+            animation: fadeIn 0.9s ease-in-out forwards;
+            opacity: 0;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .interactive-card {
+            position: relative;
+            overflow: hidden;
+            min-height: 320px;
+        }
+        .interactive-card .detail-panel {
+            transition: max-height 0.35s ease, opacity 0.3s ease;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .interactive-card.active .detail-panel {
+            max-height: 220px;
+            opacity: 1;
+        }
+        .interactive-card .reveal-hint {
+            transition: opacity 0.3s ease;
+        }
+        .interactive-card.active .reveal-hint {
+            opacity: 0;
+        }
+        .text-accent { color: #60a5fa; }
+        .bg-accent { background-color: #60a5fa; }
+        .image-scale-hover {
+            transition: transform 0.35s ease, filter 0.35s ease;
+        }
+        .image-scale-hover:hover {
+            transform: scale(1.03);
+            filter: saturate(1.08);
+        }
+        .profile-circle {
+            width: 160px;
+            height: 160px;
+            border-radius: 9999px;
+            overflow: hidden;
+            border: 3px solid #60a5fa;
+            object-fit: cover;
+        }
+        .carousel-container {
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        .carousel-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        .carousel-container::-webkit-scrollbar-track {
+            background: #1e293b;
+            border-radius: 10px;
+        }
+        .carousel-container::-webkit-scrollbar-thumb {
+            background: #60a5fa;
+            border-radius: 10px;
+        }
+        .carousel-item {
+            min-width: 280px;
+            flex-shrink: 0;
+        }
+        .media-contain {
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body class="text-white font-sans bg-slate-950">
+    <nav class="fixed top-0 w-full bg-slate-900/95 backdrop-blur-sm z-50 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <a href="#hero" class="text-xl font-semibold text-accent tracking-wide">YK</a>
+                <div class="hidden md:flex items-center space-x-8 text-slate-200">
+                    <a href="#experience" class="hover:text-accent transition">Experience</a>
+                    <a href="#volunteering" class="hover:text-accent transition">Volunteering</a>
+                    <a href="#design" class="hover:text-accent transition">Design</a>
+                    <a href="#skills" class="hover:text-accent transition">Skills</a>
+                    <a href="#contact" class="hover:text-accent transition">Contact</a>
+                </div>
+                <button class="md:hidden text-slate-200" onclick="toggleMenu()" aria-label="Toggle navigation menu">
+                    <i class="fa-solid fa-bars text-2xl"></i>
+                </button>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden pb-4 space-y-2 text-slate-200">
+                <a href="#experience" class="block py-2 hover:text-accent transition">Experience</a>
+                <a href="#volunteering" class="block py-2 hover:text-accent transition">Volunteering</a>
+                <a href="#design" class="block py-2 hover:text-accent transition">Design</a>
+                <a href="#skills" class="block py-2 hover:text-accent transition">Skills</a>
+                <a href="#contact" class="block py-2 hover:text-accent transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-24">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950"></div>
+        <img src="https://source.unsplash.com/random/1920x1080/?aerospace,engineering" alt="Aerospace background" class="absolute inset-0 w-full h-full object-cover opacity-20">
+        <div class="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto fade-in">
+            <p class="text-sm uppercase tracking-[0.4em] text-slate-500 mb-6">Aerospace | Fluidics | Design</p>
+            <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold mb-5 leading-tight">Yotam Katzman</h1>
+            <p class="text-xl sm:text-2xl lg:text-3xl text-accent mb-4">Technion M.Sc. Mechanical Engineering Candidate | Aerospace Engineer | Innovative Designer & Project Lead</p>
+            <p class="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto mb-10">A creative problem-solver with extensive experience in rapid task execution, engineering design, and end-to-end product management—from initial concept to final manufacturing.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#experience" class="inline-flex items-center justify-center bg-accent text-slate-950 px-8 py-3 rounded-full font-semibold transition hover:bg-blue-400 hover:-translate-y-1">View My Work</a>
+                <a href="#contact" class="inline-flex items-center justify-center border border-blue-500 text-blue-200 px-8 py-3 rounded-full font-semibold transition hover:bg-blue-500 hover:text-slate-950">Contact Me</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <h2 class="text-4xl font-bold text-center mb-16 text-white">Academic & Professional Experience</h2>
+        <div class="grid gap-8 lg:grid-cols-[1fr_2fr]">
+            <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover-lift">
+                <h3 class="text-2xl font-semibold mb-4 text-accent">Education</h3>
+                <div class="space-y-6 text-slate-300">
+                    <div>
+                        <h4 class="text-lg font-medium text-white">M.Sc. Mechanical Engineering</h4>
+                        <p>Technion - Israel Institute of Technology (Oct 2025 - Present)</p>
+                        <p class="text-sm text-slate-400">Advisor: Prof. Moran Bercovici</p>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-medium text-white">B.Sc. Aerospace Engineering</h4>
+                        <p>Technion (Oct 2021 - Oct 2025)</p>
+                        <p class="text-sm text-slate-400">GPA: 87.9/100</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover-lift">
+                <h3 class="text-2xl font-semibold mb-4 text-accent">Zero-G Flight Project</h3>
+                <p class="text-slate-300 mb-6">I designed and participated in a parabolic flight experiment with the company Zero-G in collaboration with NASA to investigate the heat transfer phenomena of polymers in microgravity conditions.</p>
+                <div class="rounded-3xl overflow-hidden border border-slate-800 bg-black relative">
+                    <video class="w-full h-[420px] md:h-[520px] object-cover" src="./assets/Videos/Zero_G/ZERO_G.mov" autoplay muted loop playsinline></video>
+                    <img src="./assets/Images/Zero_G/ZERO_G.jpeg" alt="Zero-G Project" class="w-40 h-40 rounded-full object-cover border-2 border-white absolute top-1 right-1">
+                </div>
+            </div>
+        </div>
+        <div class="mt-12 bg-slate-900 p-8 rounded-3xl border border-slate-800 hover-lift">
+            <h3 class="text-2xl font-semibold mb-6 text-accent">Publications & Presentations</h3>
+            <div class="grid gap-8 lg:grid-cols-2 text-slate-300">
+                <div>
+                    <h4 class="text-lg font-medium text-white mb-3">Publications</h4>
+                    <ul class="space-y-3">
+                        <li>&bull; <a href="https://arxiv.org/abs/2603.27367" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300">"Zero-waste manufacturing of ophthalmic lenses by direct Fluidic Shaping in arbitrary domains" (arXiv:2603.27367)</a></li>
+                        <li>&bull; <a href="https://arxiv.org/abs/2601.14897" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300">"Modeling the Thermal Behavior of Photopolymers for In-Space Fabrication" by Jonathan Ericson (arXiv:2601.14897)</a></li>
+                        <li>&bull; <a href="https://doi.org/10.1016/j.addma.2025.104871" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300">"Fabrication of ophthalmic lenses by Fluidic Shaping" by Mor Elgarisi (Additive Manufacturing)</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-medium text-white mb-3">Conferences</h4>
+                    <ul class="space-y-3">
+                        <li>&bull; SPIE (Oral, Aug 2025) - <a href="https://doi.org/10.1117/12.3063447" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300">Presentation link</a></li>
+                        <li>&bull; Liquid Interfaces Zurich (Poster, Mar 2025)</li>
+                        <li>&bull; Oasis Tel Aviv (Poster, Mar 2025)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8">
+                <h4 class="text-lg font-medium text-white mb-3">Awards</h4>
+                <ul class="space-y-2 text-slate-300">
+                    <li>&bull; Jacobs Fellowship for Excellence (Spring 2025)</li>
+                    <li>&bull; Dean's List (Spring 2022/23)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="technical-arsenal" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <h2 class="text-4xl font-bold text-center mb-16 text-white">Technical Arsenal</h2>
+        <div class="grid gap-8 lg:grid-cols-3">
+            <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover-lift">
+                <h3 class="text-2xl font-semibold mb-4 text-accent">Design</h3>
+                <p class="text-slate-300 mb-4">CAD, mechanical modeling, and rapid prototyping.</p>
+                <ul class="text-slate-300 space-y-2 mb-6">
+                    <li>&bull; SolidWorks</li>
+                    <li>&bull; Creo</li>
+                </ul>
+                <a href="#design" class="inline-flex items-center text-blue-400 hover:text-blue-300 font-semibold transition">Explore Design</a>
+            </div>
+            <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover-lift">
+                <h3 class="text-2xl font-semibold mb-4 text-accent">Manufacturing</h3>
+                <p class="text-slate-300 mb-4">End-to-end fabrication and assembly expertise.</p>
+                <ul class="text-slate-300 space-y-2">
+                    <li>&bull; 3D Printing (Resin & FDM)</li>
+                    <li>&bull; CNC & Machining</li>
+                    <li>&bull; Precision assembly</li>
+                </ul>
+            </div>
+            <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover-lift">
+                <h3 class="text-2xl font-semibold mb-4 text-accent">Software</h3>
+                <p class="text-slate-300 mb-4">Modeling, analytics and engineering software.</p>
+                <ul class="text-slate-300 space-y-2">
+                    <li>&bull; MATLAB</li>
+                    <li>&bull; Python</li>
+                    <li>&bull; Java</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="volunteering" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <h2 class="text-4xl font-bold text-center mb-16 text-white">Volunteering & Social Impact</h2>
+        <div class="grid gap-8 lg:grid-cols-[2fr_1fr]">
+            <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover-lift">
+                <h3 class="text-2xl font-semibold mb-4 text-accent">Technion HAMAL</h3>
+                <p class="text-slate-300 mb-6">A rapid response engineering team at the Technion. We performed various and diverse engineering developments to meet the specific needs of forces in the field, such as a ball-joint mechanical adapter for connecting NVGs to telescopes.</p>
+                <div class="grid gap-4 sm:grid-cols-2">
+                    <div class="rounded-3xl border border-slate-800 overflow-hidden bg-black">
+                        <video class="w-full h-56 md:h-64 media-contain" src="./assets/Videos/Hamal/Hamal.mp4" autoplay muted loop playsinline></video>
+                    </div>
+                    <div class="rounded-3xl border border-slate-800 overflow-hidden bg-black">
+                        <img src="./assets/Images/HAMAL/IMG-20231114-WA0024.jpg" alt="HAMAL adapter" class="w-full h-56 md:h-64 object-cover">
+                    </div>
+                </div>
+            </div>
+            <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover-lift">
+                <h3 class="text-2xl font-semibold mb-4 text-accent">Association for the Blind</h3>
+                <p class="text-slate-300">Dedicated volunteer since 2014, currently regularly accompanying and assisting a visually impaired woman. Supporting independence, accessibility, and meaningful social connection.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="design" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <h2 class="text-4xl font-bold text-center mb-16 text-white">Design, Prototyping & Art</h2>
+        <div class="mb-12">
+            <h3 class="text-2xl font-semibold mb-6 text-accent">Custom Apparel Collection</h3>
+            <div class="carousel-container flex gap-4 pb-4">
+                <div class="carousel-item">
+                    <img src="./assets/Images/Design/IMG_7492.jpg" alt="Design Collection 1" class="w-full h-64 object-cover rounded-3xl border border-slate-800 image-scale-hover">
+                </div>
+                <div class="carousel-item">
+                    <img src="./assets/Images/Design/IMG_7738.jpg" alt="Design Collection 2" class="w-full h-64 object-cover rounded-3xl border border-slate-800 image-scale-hover">
+                </div>
+                <div class="carousel-item">
+                    <img src="./assets/Images/Design/IMG_20190711_220050.jpg" alt="Design Collection 3" class="w-full h-64 object-cover rounded-3xl border border-slate-800 image-scale-hover">
+                </div>
+                <div class="carousel-item">
+                    <img src="./assets/Images/Design/IMG_20200208_165350.jpg" alt="Design Collection 4" class="w-full h-64 object-cover rounded-3xl border border-slate-800 image-scale-hover">
+                </div>
+                <div class="carousel-item">
+                    <img src="./assets/Images/Design/IMG_20210530_105551_022.jpg" alt="Design Collection 5" class="w-full h-64 object-cover rounded-3xl border border-slate-800 image-scale-hover">
+                </div>
+                <div class="carousel-item">
+                    <img src="./assets/Images/Design/IMG_20210530_105551_078.jpg" alt="Design Collection 6" class="w-full h-64 object-cover rounded-3xl border border-slate-800 image-scale-hover">
+                </div>
+                <div class="carousel-item">
+                    <img src="./assets/Images/Design/IMG_20210530_105551_085.jpg" alt="Design Collection 7" class="w-full h-64 object-cover rounded-3xl border border-slate-800 image-scale-hover">
+                </div>
+                <div class="carousel-item">
+                    <img src="./assets/Images/Design/IMG_20210530_105551_098.jpg" alt="Design Collection 8" class="w-full h-64 object-cover rounded-3xl border border-slate-800 image-scale-hover">
+                </div>
+                <div class="carousel-item">
+                    <img src="./assets/Images/Design/IMG_20220917_193743.jpg" alt="Design Collection 9" class="w-full h-64 object-cover rounded-3xl border border-slate-800 image-scale-hover">
+                </div>
+                <div class="carousel-item">
+                    <img src="./assets/Images/Design/IMG_20220917_193753.jpg" alt="Design Collection 10" class="w-full h-64 object-cover rounded-3xl border border-slate-800 image-scale-hover">
+                </div>
+                <div class="carousel-item">
+                    <img src="./assets/Images/Design/IMG-20191102-WA0044.jpg" alt="Design Collection 11" class="w-full h-64 object-cover rounded-3xl border border-slate-800 image-scale-hover">
+                </div>
+                <div class="carousel-item">
+                    <img src="./assets/Images/Design/IMG-20191226-WA0036.jpg" alt="Design Collection 12" class="w-full h-64 object-cover rounded-3xl border border-slate-800 image-scale-hover">
+                </div>
+                <div class="carousel-item">
+                    <img src="./assets/Images/Design/IMG-20191226-WA0055.jpg" alt="Design Collection 13" class="w-full h-64 object-cover rounded-3xl border border-slate-800 image-scale-hover">
+                </div>
+                <div class="carousel-item">
+                    <img src="./assets/Images/Design/IMG-20200518-WA0048.jpg" alt="Design Collection 14" class="w-full h-64 object-cover rounded-3xl border border-slate-800 image-scale-hover">
+                </div>
+                <div class="carousel-item">
+                    <img src="./assets/Images/Design/IMG-20230527-WA0192.jpg" alt="Design Collection 15" class="w-full h-64 object-cover rounded-3xl border border-slate-800 image-scale-hover">
+                </div>
+            </div>
+            <p class="text-slate-300 mt-4">Handcrafted custom footwear and apparel. End-to-end product lifecycle management, supplier relations, and successful manufacturing and distribution of custom units.</p>
+        </div>
+
+        <div class="grid gap-8 lg:grid-cols-2">
+            <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover-lift">
+                <h3 class="text-2xl font-semibold mb-4 text-accent">Product Prototyping</h3>
+                <p class="text-slate-300 mb-6">Designed and 3D printed a fully adjustable MagSafe iPhone mount with a precise fit and durable finish.</p>
+                <div class="rounded-3xl border border-slate-800 overflow-hidden bg-black">
+                    <video class="w-full h-72 media-contain" src="./assets/Videos/Design/Megsafe.mov" autoplay muted loop playsinline></video>
+                </div>
+            </div>
+            <div class="bg-slate-900 p-8 rounded-3xl border border-slate-800 hover-lift">
+                <h3 class="text-2xl font-semibold mb-4 text-accent">Scrap-to-Art Welding</h3>
+                <p class="text-slate-300 mb-6">Fabricated and welded a sword from leftover mechanical components, exhibited as kinetic art and donated proceeds to support soldiers.</p>
+                <div class="rounded-3xl border border-slate-800 overflow-hidden bg-black">
+                    <img src="./assets/Images/exhibition/Sward.jpg" alt="Welded sword exhibition" class="w-full h-72 media-contain bg-slate-950">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-slate-900/70 rounded-3xl border border-slate-800">
+        <h2 class="text-4xl font-bold text-center mb-16 text-white">The Skill Lab / Hobbies</h2>
+        <div class="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+            <div class="bg-slate-900 p-6 rounded-3xl border border-slate-800 hover-lift">
+                <div class="flex justify-center mb-5 text-blue-400 text-4xl"><i class="fa-solid fa-skiing"></i></div>
+                <h3 class="text-2xl font-semibold mb-4 text-white">Sports</h3>
+                <p class="text-slate-300 mb-6">Snowboarding, Diving, Windsurfing, American Football enthusiast. Two vertical action videos showcase aerial technique and a portrait-friendly presentation.</p>
+                <div class="space-y-4">
+                    <div class="rounded-3xl overflow-hidden border border-slate-800 bg-black">
+                        <video class="w-full h-[32rem] media-contain" src="./assets/Videos/Snowboarding/Jump2.MOV" autoplay muted loop playsinline></video>
+                    </div>
+                    <div class="rounded-3xl overflow-hidden border border-slate-800 bg-black">
+                        <video class="w-full h-[32rem] media-contain" src="./assets/Videos/Snowboarding/Snowboard_jump1.mov" autoplay muted loop playsinline></video>
+                    </div>
+                </div>
+            </div>
+            <div class="grid gap-6">
+                <div class="interactive-card bg-slate-900 p-6 rounded-3xl border border-slate-800 hover-lift cursor-pointer" tabindex="0" aria-expanded="false">
+                    <div class="flex justify-center mb-5 text-blue-400 text-4xl"><i class="fa-solid fa-chess-knight"></i></div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">Chess (Live API)</h3>
+                    <p class="text-slate-300">Strategic thinking and rapid decision-making through chess.</p>
+                    <div class="detail-panel hidden mt-4 text-slate-300 text-sm">
+                        <p>Chess.com Rating: <span id="chess-rating" class="text-accent font-bold">Loading...</span></p>
+                        <p>Profile: 999katzman999</p>
+                    </div>
+                    <p class="reveal-hint mt-4 text-slate-500 text-sm">Hover or tap to reveal rating.</p>
+                </div>
+                <div class="interactive-card bg-slate-900 p-6 rounded-3xl border border-slate-800 hover-lift cursor-pointer" tabindex="0" aria-expanded="false">
+                    <div class="flex justify-center mb-5 text-blue-400 text-4xl"><i class="fa-solid fa-hands-bubbles"></i></div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">Juggling</h3>
+                    <p class="text-slate-300">Juggling (3 Clubs/Balls) and Unicycling.</p>
+                    <div class="detail-panel hidden mt-4 text-slate-300 text-sm">
+                        <p>Enhances coordination, focus, and adaptive reflexes during intense problem-solving.</p>
+                    </div>
+                    <p class="reveal-hint mt-4 text-slate-500 text-sm">Hover or tap to reveal more.</p>
+                </div>
+                <div class="interactive-card bg-slate-900 p-6 rounded-3xl border border-slate-800 hover-lift cursor-pointer" tabindex="0" aria-expanded="false">
+                    <div class="flex justify-center mb-5 text-blue-400 text-4xl"><i class="fa-solid fa-language"></i></div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">Languages</h3>
+                    <p class="text-slate-300">Communication skills across cultures.</p>
+                    <div class="detail-panel hidden mt-4 text-slate-300 text-sm">
+                        <p>Native Hebrew, Fluent English, currently learning Spanish.</p>
+                    </div>
+                    <p class="reveal-hint mt-4 text-slate-500 text-sm">Hover or tap to reveal more.</p>
+                </div>
+                <div class="interactive-card bg-slate-900 p-6 rounded-3xl border border-slate-800 hover-lift cursor-pointer" tabindex="0" aria-expanded="false">
+                    <div class="flex justify-center mb-5 text-blue-400 text-4xl"><i class="fa-solid fa-chart-line"></i></div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">Investing</h3>
+                    <p class="text-slate-300">Stock Market & Capital Markets analysis.</p>
+                    <div class="detail-panel hidden mt-4 text-slate-300 text-sm">
+                        <p>Strategic financial planning and market insights.</p>
+                    </div>
+                    <p class="reveal-hint mt-4 text-slate-500 text-sm">Hover or tap to reveal more.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact" class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="bg-slate-900 p-10 rounded-3xl border border-slate-800 hover-lift text-center">
+            <h2 class="text-3xl font-bold mb-6 text-white">Get In Touch</h2>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-6 mb-8 text-slate-200">
+                <a href="mailto:Katzmanyotam@gmail.com" class="text-blue-400 hover:text-blue-300 transition">Katzmanyotam@gmail.com</a>
+                <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:text-blue-300 transition">GitHub</a>
+            </div>
+            <button onclick="scrollToTop()" class="bg-blue-500 hover:bg-blue-400 text-slate-950 px-7 py-3 rounded-full font-semibold transition hover:-translate-y-1">Back to Top</button>
+            <p class="mt-8 text-slate-500">&copy; 2026 Yotam Katzman</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        document.querySelectorAll('.interactive-card').forEach(card => {
+            const detail = card.querySelector('.detail-panel');
+            const toggle = () => {
+                const active = card.classList.toggle('active');
+                card.setAttribute('aria-expanded', active.toString());
+                if (detail) {
+                    detail.classList.toggle('hidden');
+                }
+            };
+            card.addEventListener('click', toggle);
+            card.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    toggle();
+                }
+            });
+        });
+
+        function loadChessRating() {
+            const ratingSpan = document.getElementById('chess-rating');
+            fetch('https://api.chess.com/pub/player/999katzman999/stats')
+                .then(response => response.json())
+                .then(data => {
+                    const rating = data?.chess_rapid?.last?.rating;
+                    ratingSpan.innerText = rating || '1056';
+                })
+                .catch(() => {
+                    ratingSpan.innerText = '1056';
+                });
+        }
+
+        loadChessRating();
+
+        const observerOptions = {
+            threshold: 0.12,
+            rootMargin: '0px 0px -80px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
